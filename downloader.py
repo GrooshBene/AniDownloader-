@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+#-*- coding: GrooshBene -*-
 import urllib2
 import urllib
 
@@ -14,7 +14,20 @@ import urllib
 #front = "http://cdn9.ani24.moe/Nichijou/%5B%ED%95%9C%EC%83%9B-Raws%5D%20Nichijou%20-%20"
 #back = "%20%28TVA%201280x720%20x264%20AAC%29.mp4"
 
+url_main = "http://ani24.net"
 
+opener = urllib2.build_opener()
+opener.addheaders.append(('Cookie', 'PHPSESSID=dj3kahd7ken57lcidh4bsk2she'))
+res = opener.open(url_main)
+data = res.read()
+
+resultList = re.findall("\$\.cookie\(\"security\", \"(.*?)\"\);",data)
+# print resultList[1]
+reopener = urllib2.build_opener()
+reopener.addheaders.append(('Cookie', 'PHPSESSID=dj3kahd7ken57lcidh4bsk2she; security='+resultList[1]))
+reres = reopener.open(url_main)
+redata = reres.read()
+print redata
 
 val = input("Please input the value: ")
 front = raw_input("Front : ")
