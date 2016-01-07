@@ -2,19 +2,29 @@
 
 import MySQLdb
 
-# Open database connection
-db = MySQLdb.connect("localhost","root","wltn6705","pythontest" )
+fileUrl = "/Volumes/Seagate Backup Plus Drive/Projects/AniDownloader-/test"
 
-# prepare a cursor object using cursor() method
+fileFormat = ".txt"
+val = input("Plz Input the Value : ")
+
+db = MySQLdb.connect("localhost", "root", "wltn6705", "pythontest")
+
 cursor = db.cursor()
 
-# execute SQL query using execute() method.
-cursor.execute("SELECT VERSION()")
+cursor.execute("DROP TABLE IF EXISTS EMPLOYEE")
 
-# Fetch a single row using fetchone() method.
-data = cursor.fetchone()
+sql = """CREATE TABLE FILES (
+         id INT,
+         subtitle   CHAR(100),
+         date   INT
+)"""
 
-print "Database version : %s " % data
-
-# disconnect from server
+cursor.execute(sql)
+for i in range(0,val):
+    record = "INSERT INTO FILES(id,subtitle, date) VALUES ('%d', '%s', '%d')" % (i, fileUrl + (i+1) + fileFormat, new Date());
+    try:
+        cursor.execute(record)
+        db.commit()
+    except:
+        db.rollback()
 db.close()
